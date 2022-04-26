@@ -1,6 +1,12 @@
 const items = document.querySelector('.items');
 const input = document.querySelector('.footer_input');
 const addBtn = document.querySelector('.footer_button');
+const form = document.querySelector('.new-form');
+
+form.addEventListener('submit', event => {
+    event.preventDefault();
+    onAdd();
+})
 
 // 사용자가 클릭 했을때 이벤트를 처리하는 함수는 보통 on이라고 붙힙니다.
 function onAdd() {
@@ -26,42 +32,70 @@ function onAdd() {
     item.scrollIntoView({ block: 'center' });
 }
 
-addBtn.addEventListener('click', () => {
-    onAdd();
-})
+// form으로 대체
+// addBtn.addEventListener('click', () => {
+//     onAdd();
+// })
+
+let id = 0; //UUID
 
 function createItem(text) {
     const itemRow = document.createElement('li');
     itemRow.setAttribute('class', 'item_row');
+    itemRow.setAttribute('data-id', id);
 
-    const item = document.createElement('div');
-    item.setAttribute('class', 'item');
+    itemRow.innerHTML = `
+    <div class="item">
+        <span class="item_name">${text}</span>
+        <button class="item_delete">
+            <i class="fa-solid fa-trash-can" data-id=${id}></i>
+        </button>
+    </div>
+    <div class="item_divider"></div>`;
 
-    const name = document.createElement('span');
-    name.setAttribute('class', 'item_name');
-    name.innerText = text;
+    // const item = document.createElement('div');
+    // item.setAttribute('class', 'item');
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.setAttribute('class', 'item_delete');
-    deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
-    deleteBtn.addEventListener('click', () => {
-        items.removeChild(itemRow);
-    });
+    // const name = document.createElement('span');
+    // name.setAttribute('class', 'item_name');
+    // name.innerText = text;
 
-    const itemDivider = document.createElement('div');
-    itemDivider.setAttribute('class', 'item_divider');
+    // const deleteBtn = document.createElement('button');
+    // deleteBtn.setAttribute('class', 'item_delete');
+    // deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+    // deleteBtn.addEventListener('click', () => {
+    //     items.removeChild(itemRow);
+    // });
 
-    item.appendChild(name);
-    item.appendChild(deleteBtn);
+    // const itemDivider = document.createElement('div');
+    // itemDivider.setAttribute('class', 'item_divider');
 
-    itemRow.appendChild(item);
-    itemRow.appendChild(itemDivider);
+    // item.appendChild(name);
+    // item.appendChild(deleteBtn);
 
+    // itemRow.appendChild(item);
+    // itemRow.appendChild(itemDivider);
+    id++;
     return itemRow;
 }
 
-input.addEventListener('keypress', event => {
-    if(event.key == 'Enter') {
-        onAdd();
+// form으로 대체
+// keypress 사용하면 안됩니다.
+// input.addEventListener('keydown', event => {
+//     // 한글 다 만들어 지고 처리(아니면 keyup을 사용.)
+//     if(event.isComposing) {
+//         return;
+//     }
+//     if(event.key == 'Enter') {
+//         onAdd();
+//     }
+// });
+
+items.addEventListener('click', event => {
+    const id = event.target.dataset.id;
+    if(id) {
+        console.log('click');
+        const toBeDeleted = document.querySelector(`.item_row[data-id="${id}"]`);
+        toBeDeleted.remove();
     }
 });

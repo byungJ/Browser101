@@ -26,10 +26,14 @@
             </li>
         </ul>
         <footer class="footer">
-            <input type="text" class="footer_input">
-            <button class="footer_button">
-                <i class="fa-solid fa-plus"></i>
-            </button>
+            <!-- 서버에서 데이터를 처리 할 때는 액션이 필요하지만
+            단순히 클라이언트에서 처리하는 경우에는 필요하지 않습니다. -->
+            <form class="new-form">
+                <input type="text" class="footer_input">
+                <button class="footer_button">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </form>
         </footer>
     </section>
 </body>
