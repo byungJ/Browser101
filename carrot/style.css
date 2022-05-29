@@ -1,0 +1,5 @@
+.game {
+    width: 800px;
+    height: 500px;
+    background: url(./img/background.png) center/cover;
+}
