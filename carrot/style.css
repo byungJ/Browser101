@@ -1,5 +1,106 @@
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+body {
+    text-align: center;
+}
+
 .game {
+    display: flex;
+    flex-direction: column;
     width: 800px;
     height: 500px;
+    margin: auto;
+    border-radius: 20px;
     background: url(./img/background.png) center/cover;
+}
+
+.game_header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.game_button {
+    width: 60px;
+    height: 60px;
+    background-color: wheat;
+    border: 4px black solid;
+    font-size: 24px;
+    transition: transform 300ms ease-in;
+}
+
+.game_button:hover {
+    transform: scale(1.1);
+}
+
+.game_timer {
+    width: 100px;
+    background-color: white;
+    text-align: center;
+    border: 4px black solid;
+    font-size: 32px;
+    margin-top: 8px;
+    border-radius: 20px;
+    visibility: hidden;
+}
+
+.game_score {
+    text-align: center;
+ width: 50px;
+ height: 50px;
+ font-size: 46px;
+ background-color: darksalmon;
+ border-radius: 50%;
+ color: white;
+ margin-top: 8px;
+ border: 3px black solid;
+ visibility: hidden;
+}
+
+.game_field {
+    /*
+    bug, carrot가 생성 될 때 absolute를 이용 해서 0부터 높이와 너비가 지정되어 있는데
+    부모 컨테이너인 game필드가 static
+    그걸 기준으로 (bug, carrot)가 absolute 됩니다.
+    따라서 bug, carrot가 제대로 나올려면 relative로 설정 */
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-top: 40px;
+}
+
+.pop-up {
+    display: block;
+    width: 400px;
+    height: 140px;
+    padding: 20px;
+    background-color: #00000090;
+    color: white;
+    text-align: center;
+    margin: auto;
+    border-radius: 20px;
+    transform: translateY(-150%);
+}
+
+.pop-up--hide {
+    display: none;
+}
+
+.pop-up_refreash {
+    width: 60px;
+    height: 60px;
+    background-color: wheat;
+    border: 2px black solid;
+    border-radius: 50%;
+    font-size: 24px;
+}
+
+.pop-up_message {
+    display: block;
+    font-size: 38px;
 }
