@@ -1,21 +1,33 @@
 'use strict';
-const carrotSound = new Audio('./sound/carrot_pull.mp3');
+import * as sound from './sound.js'
 
-export default class Field {
+const CARROT_SIZE = 80;
+
+export const ItemType = Object.freeze(
+    {
+        carrot: 'carrot',
+        bug: 'bug',
+    }
+)
+
+export class Field {
     constructor(carrotCount, bugCount) {
         this.carrotCount = carrotCount;
         this.bugCount = bugCount;
 
         this.field = document.querySelector('.game_field');
-        this.fieldRect = field.getBoundingClientRect();
-        this.field.addEventListener('click', this.onClick);
+        this.fieldRect = this.field.getBoundingClientRect();
+
+        // 1. this.onClick = this.onClick.bind(this); 직접 바인딩
+        // 2. () => {} Arrow함수 사용하기
+        this.field.addEventListener('click',this.onClick);
     }
 
     init() {
-        field.innerHTML = '';
+        this.field.innerHTML = '';
         // 벌레와 당근을 생성힌 뒤 field에 추가 해줌
-        this._addItem('carrot', CARROT_COUNT, './img/carrot.png');
-        this._addItem('bug', BUG_COUNT, './img/bug.png');
+        this._addItem('carrot', this.carrotCount, './img/carrot.png');
+        this._addItem('bug', this.bugCount, './img/bug.png');
     }
 
     setClickListener(onItemClick) {
@@ -41,21 +53,22 @@ export default class Field {
         }
     }
 
-    onClick(event) {
+    // 3. 엘리추천
+    // onClick이라는 맴버변수로 만들고 arrow function을 가리키고 있습니다.
+    onClick = (event) => {
         const target = event.target;
     
         // matches: css 셀렉터가 맞는지 확인.
         if(target.matches('.carrot')) {
             target.remove();
-            playSound(carrotSound);
-            this.onItemClick && this.onItemClick('carrot');
+            sound.playCarrot();
+            this.onItemClick && this.onItemClick(ItemType.carrot);
         } else if(target.matches('.bug')) {
-            this.onItemClick && this.onItemClick('bug');
+            this.onItemClick && this.onItemClick(ItemType.bug);
         }
     }
 }
 
-function playSound(sound) {
-    sound.currentTime = 0;
-    sound.play();
+function randomNumber(min, max) {
+    return Math.random() * (max - min) + min;
 }
